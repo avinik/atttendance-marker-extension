@@ -5,13 +5,13 @@ var alarmClock = {
 
     onHandler : function(force_update) {
         if(force_update ==  true){
-            chrome.alarms.create("attendanceAlarm", {periodInMinutes: 30, delayInMinutes: 0.1} );
+            chrome.alarms.create("attendanceAlarm", {periodInMinutes: 30, delayInMinutes: 1} );
             window.close();
         }
         else {
             chrome.alarms.get("attendanceAlarm", function(alarm) {
                 if(alarm == null){
-                    chrome.alarms.create("attendanceAlarm", {periodInMinutes: 30, delayInMinutes: 0.1} );
+                    chrome.alarms.create("attendanceAlarm", {periodInMinutes: 30, delayInMinutes: 1} );
                 }
                 else{
                     chrome.alarms.create("attendanceAlarm", {when: alarm.scheduledTime, periodInMinutes: 30} );
