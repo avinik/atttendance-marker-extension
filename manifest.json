@@ -1,0 +1,27 @@
+{
+    "name": "Attendance Marker",
+    "version": "0.0.0.1",
+    "manifest_version": 2,
+    "description": "A Chromium extension to mark attendance in indiabulls.",
+    "icons": {
+        "16": "icons/Attendance_logo16x16.png",
+        "32": "icons/Attendance_logo32x32.png",
+        "64": "icons/Attendance_logo64x64.png",
+        "128": "icons/Attendance_logo128x128.png"
+    },
+    "browser_action": {
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "storage",
+        "alarms", 
+        "tabs"
+    ],
+    "background": {
+        "scripts": ["js/background.js"]
+    },
+    "content_scripts": [{
+        "js": ["js/attendance_marker.js"],
+        "matches": ["https://openinet.indiabulls.com/*"]
+      }]
+}
