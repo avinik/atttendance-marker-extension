@@ -11,10 +11,13 @@ for (var i = 0; i < elts.length; i++) {
   elts[i].style['background-color'] = '#BDBDBD';
 }
 
-function checkIfAttendanceMarked(markAttendancefunc) {
+function checkIfAttendanceShouldBeMarked(markAttendancefunc) {
 
-    chrome.storage.local.get(['isAttendanceMarked', 'lastMarkedTime'], function (result) {
-
+    chrome.storage.local.get(['isAttendanceMarked', 'lastMarkedTime', 'autoMarkAttendance'], function (result) {
+        
+        if(result.autoMarkAttendance != true){
+            return;
+        }
         var isAttendanceMarked = result.isAttendanceMarked;
         var lastMarkedTimeInMilliSeconds = result.lastMarkedTime;
         if(isAttendanceMarked == null || lastMarkedTimeInMilliSeconds == null){
@@ -68,18 +71,18 @@ async function submitAttendance() {
     if(document.getElementById('chkAttendance').checked == false) {
         document.getElementById('chkAttendance').click();
     }
+    document.getElementById('btnSubmit').click();
     var lastMarkedTime = new Date(); 
     chrome.storage.local.set({ lastMarkedTime: lastMarkedTime.getTime()});
     chrome.storage.local.set({ isAttendanceMarked: true});
     console.log(lastMarkedTime.getTime());
-    document.getElementById('btnSubmit').click();
 }
 
 
 function entryPoint() {
     var currTime = new Date();
     var isNight = currTime.getHours() < 8 || currTime.getHours() > 20;
-    var isWeekend = currTime.getDay() == 0;
+    var isWeekend = currTime.getDay() == 0 || currTime.getDay() == 6;
     if(isNight || isWeekend){
         console.log("It's probably night time or weekend day");
         return;
@@ -95,7 +98,7 @@ function entryPoint() {
             submitAttendance(); 
         }
     }
-    checkIfAttendanceMarked(markAttendancefunc);
+    checkIfAttendanceShouldBeMarked(markAttendancefunc);
 }
 
 entryPoint();
