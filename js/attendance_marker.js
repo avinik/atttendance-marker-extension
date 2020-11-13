@@ -70,12 +70,13 @@ async function submitAttendance() {
     console.log('Submitting attendance...');
     if(document.getElementById('chkAttendance').checked == false) {
         document.getElementById('chkAttendance').click();
+    } else{
+        document.getElementById('btnSubmit').click();
+        var lastMarkedTime = new Date(); 
+        chrome.storage.local.set({ lastMarkedTime: lastMarkedTime.getTime()});
+        chrome.storage.local.set({ isAttendanceMarked: true});
+        console.log(lastMarkedTime.getTime());
     }
-    document.getElementById('btnSubmit').click();
-    var lastMarkedTime = new Date(); 
-    chrome.storage.local.set({ lastMarkedTime: lastMarkedTime.getTime()});
-    chrome.storage.local.set({ isAttendanceMarked: true});
-    console.log(lastMarkedTime.getTime());
 }
 
 

@@ -151,6 +151,7 @@ button:hover {
 	--base-blue: #4da9ff;
 	--base-orange: #ff8d4c;
 	--base-green: #24D154;
+	--active-green: #2ab934;
 	--base-white: #FAFAFA;
 	--white-5: #F0F0F0;
 	--white-10: #DCDCDC;
@@ -426,7 +427,7 @@ html {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color:var(--base-red);
+	background-color:var(--active-red);
 	-webkit-transition: .4s;
 	transition: .4s;
   }
@@ -444,12 +445,12 @@ html {
   }
   
   input:checked + .slider {
-	background-color: var(--base-green)
+	background-color: var(--active-green)
   }
   
-  input:focus + .slider {
-	box-shadow: 0 0 1px var(--base-green)
-  }
+	input:focus + .slider {
+		box-shadow: 0 0 1px var(--base-green)
+	}
   
   input:checked + .slider:before {
 	-webkit-transform: translateX(140px);
@@ -464,6 +465,33 @@ html {
   
   .slider.round:before {
 	border-radius: 50%;
+  }
+
+  .slider.round {
+	border-radius: 34px;
+  }
+  
+  .slider.round:before {
+	border-radius: 50%;
+  }
+  
+  /*------ ADDED CSS ---------*/
+  .slider:after{
+   content:'AUTO-OFF';
+   color: white;
+   display: block;
+   position: absolute;
+   transform: translate(-50%,-50%);
+   top: 50%;
+   left: 50%;
+   font-size: 10px;
+   font-family: Verdana, sans-serif;
+  }
+
+  input:checked + .slider:after
+  {  
+    content:'AUTO-ON';
+  }	
 
 
 
