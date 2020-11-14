@@ -29,6 +29,14 @@ var alarmClock = {
 chrome.alarms.onAlarm.addListener(function(alarm) {
     chrome.storage.local.get(['isAttendanceMarked', 'lastMarkedTime'], function (result) {
 
+        var currTime = new Date();
+        var isNight = currTime.getHours() < 8 || currTime.getHours() > 20;
+        var isWeekend = currTime.getDay() == 0 || currTime.getDay() == 6;
+        if(isNight || isWeekend){
+            console.log("It's probably night time or weekend day");
+            return;
+        }
+
         var isAttendanceMarked = result.isAttendanceMarked;
         var lastMarkedTimeInMilliSeconds = result.lastMarkedTime;
         if(isAttendanceMarked == null || lastMarkedTimeInMilliSeconds == null){
@@ -36,7 +44,6 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
         }
         else{
             var lastMarkedTime = new Date(lastMarkedTimeInMilliSeconds);
-            var currTime = new Date();
             var isAttendanceMarkedToday = isAttendanceMarked && (currTime.getDate() == lastMarkedTime.getDate());
             if(isAttendanceMarkedToday == false){
                 chrome.tabs.create({'url':loginWebsite});
