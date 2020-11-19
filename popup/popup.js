@@ -41,6 +41,7 @@ function redirectToAddCredentials() {
 
 function markAttendance() {
     var autoMarkAttendanceCheckbox = document.getElementById('auto_chkbox');
+    chrome.storage.local.set({ isAttendanceMarked: false});
     autoMarkAttendanceCheckbox.checked = true;
     chrome.storage.local.set({'autoMarkAttendance': autoMarkAttendanceCheckbox.checked});
     console.log(autoMarkAttendanceCheckbox.checked);
