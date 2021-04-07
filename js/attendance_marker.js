@@ -85,18 +85,18 @@ function entryPoint() {
     var isNight = currTime.getHours() < 8 || currTime.getHours() > 20;
     var isWeekend = currTime.getDay() == 0 || currTime.getDay() == 6;
     if(isNight || isWeekend){
-        console.log("It's probably night time or weekend day");
+        console.log("It's probably night time or weekend");
         return;
     }
     var markAttendancefunc = function(){
         if(document.URL.toLowerCase().startsWith('https://openinet.indiabulls.com/login.aspx')){
             inetLogin();
         }
-        else if(document.URL.toLowerCase().startsWith("https://openinet.indiabulls.com/default.aspx")){
-            openMarkYourAttendancePage();
-        }
         else if(document.URL.toLowerCase() == "https://openinet.indiabulls.com/NewPunch_Request/NPR_init.aspx".toLocaleLowerCase()){
             submitAttendance(); 
+        }
+        else if(document.URL.toLowerCase().startsWith("https://openinet.indiabulls.com/")){
+            openMarkYourAttendancePage();
         }
     }
     checkIfAttendanceShouldBeMarked(markAttendancefunc);

@@ -27,7 +27,10 @@ var alarmClock = {
 };
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    chrome.storage.local.get(['isAttendanceMarked', 'lastMarkedTime'], function (result) {
+    chrome.storage.local.get(['isAttendanceMarked', 'lastMarkedTime', 'autoMarkAttendance'], function (result) {
+        if(result.autoMarkAttendance == false){
+            return;
+        }
 
         var currTime = new Date();
         var isNight = currTime.getHours() < 8 || currTime.getHours() > 20;
